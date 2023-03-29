@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-  <title>Creando módulos de Python con C/C++</title>
+  <title>Recomendaciones de rendimiento para Python</title>
 
   <link rel="stylesheet" href="dist/reset.css">
   <link rel="stylesheet" href="dist/reveal.css">
@@ -54,8 +54,9 @@
       <!--***************************************************************************-->
 
       <section data-transition="slide-in fade-out">
-        <h3>Python es lento</h3>
-        ¿Qué Python?
+        <h3>¡Python es lento!</h3>
+        <h2 class="fragment">¿Qué Python? 👀</h2>
+        <h1 class="fragment">😨</h1>
       </section>
 
       <section data-transition="slide-in fade-out">
@@ -63,46 +64,60 @@
       </section>
 
       <section data-transition="slide-in fade-out">
-        Python es un lenguaje de programación, que tiene
-        muchas implementaciones con distintos <i>runtime</i>.
+        Python es un <i class="yellow">lenguaje de programación</i>, que tiene
+        muchas implementaciones con distintos <i class="red">runtime</i>.
       </section>
 
       <section data-transition="slide-in fade-out">
-        Desde otro punto de vista
+        <h3>...por otro lado</h3>
 
+        <h4>
         Python ha demostrado ser un lenguaje que permite a sistemas
-        muy complejos escalar, como por ejemplo:
+        muy complejos <i class="green">escalar</i>, por ejemplo:
+        </h4>
 
-        YouTube, Dropbox, Disqus, Eventbrite, Reddit, Twilio, Instagram, Yelp, PayPal, etc...
+        <p style="font-size: 80%;" class="fragment">
+          <i class="yellow">YouTube, Dropbox, Disqus, Eventbrite, Reddit, Twilio, Instagram, Yelp, PayPal, etc...</i>
+        </p>
       </section>
 
       <section data-transition="slide-in fade-out">
+        <blockquote>
         ...bueno pero igual me dicen que es más lento
         que <i class="ep-red">Lenguaje X</i>
+        </blockquote>
+        <h3>😑</h3>
       </section>
 
       <section data-transition="slide-in fade-out">
-        el desempeño depende de tu aplicación
-        entonces es posible que tú código tenga algunos componentes
-        o características que hacen el proceso muy lento.
+        <ul>
+          <li class="fragment">el desempeño depende de <i class="yellow">tu aplicación</i></li>
+          <li class="fragment">es posible que <i class="yellow">tú código</i> tenga <i class="red">la culpa</i></li>
+        </ul>
+        <img class="fragment" src="img/pikachu.png" style="width: 40%;"/>
       </section>
 
 
       <section data-transition="slide-in fade-out">
         <h3>Peras y Manzanas</h3>
-        Al menos, comparar el rendimiento de implementaciones
-        de lenguajes interpretados entre sí y no con lenguajes compilados.
+        <img src="img/lenguajes.png" />
       </section>
 
       <section data-transition="slide-in fade-out">
-        Ok, entonces ¿cómo se puede mejorar el rendimiento?
+        <i class="yellow">...entonces</i>
+        <h3>¿cómo se puede mejorar el rendimiento?</h3>
+        <h2>🤔</h2>
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3>Rendimiento de qué?</h3>
-        tiempo de ejecución, uso de memoria
-
-        ... o tiempo en escribir código?
+        <h3>El rendimiento</h3>
+        <ul>
+          <li>Tiempo de ejecución</li>
+          <li>Uso de recursos (memoria)</li>
+          <li>Transmisión de datos</li>
+          <li>...</li>
+          <li>tiempo para escribir código</li>
+        </ul>
       </section>
 
       <section data-transition="slide-in fade-out">
@@ -113,7 +128,6 @@
       <section data-transition="slide-in fade-out">
         <h3>Perfilamiento</h3>
 python -m cProfile main.py
-pytest-profiling
       </section>
 
       <section data-transition="slide-in fade-out">
