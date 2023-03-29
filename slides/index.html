@@ -1,4 +1,4 @@
-<!doctype html>
+<!doctype htmyear)
 <html>
 <head>
   <meta charset="utf-8">
@@ -30,14 +30,14 @@
   <div class="reveal">
     <div class="slides">
       <!--***************************************************************************-->
-      <section>
+      <section data-background-image="img/cover.png">
         <div id="left70">
-          <h2 style="font-size: 1.1em;">¿Por qué <strike><i class="ep-red">Python</i></strike> tu código es lento?</h2>
-        <h2 style="font-size: 1.1em;"><i class="ep-red">recomendación para mejorar el rendimiento</i></h2>
-        <p style="font-size: 80%;margin-top: 10%;">
-          Dr. <i class="yellow">Cristián</i> Maureira-Fredes<br/>
+          <h2 style="font-size: 1.1em;">¿Por qué <strike style="text-decoration-thickness: 6px;"><i class="ep-red">Python</i></strike> <i class="yellow">tu código</i> es lento?</h2>
+          <h4 style="font-size: 80%;"><i class="blue">recomendaciones para mejorar el rendimiento</i></h4>
+        <p style="font-size: 70%;margin-top: 10%;">
+          Dr. <i class="yellow">Cristián</i> Maureira-Fredes
         </p>
-        <p style="font-size: 60%">
+        <p style="font-size: 50%">
           Senior R&amp;D Manager en  <img class="plain" src="img/qt.png" style="height: 50px; vertical-align: middle; background: rgba(0, 0, 0, 0);">
           <br/>
           @cmaureir<br/>
@@ -48,36 +48,42 @@
         </p>
         </div>
         <div id="right30">
-          <img style="margin-top: 80%; height: 200px;" src="img/python.svg" />
         </div>
       </section>
       <!--***************************************************************************-->
 
       <section data-transition="slide-in fade-out">
-        <h3>¡Python es lento!</h3>
+        <h3><i class="red">¡Python es lento!</i></h3>
         <h2 class="fragment">¿Qué Python? 👀</h2>
         <h1 class="fragment">😨</h1>
       </section>
 
       <section data-transition="slide-in fade-out">
-        Logos con varias implementaciones
+        <h3>¿Python?</h3>
+        <img style="width: 90%;" src="img/interpreters1.png" />
+      </section>
+
+      <section data-transition="fade-in slide-out">
+        <h3>¿Python?</h3>
+        <img style="width: 90%;" src="img/interpreters2.png" />
       </section>
 
       <section data-transition="slide-in fade-out">
         Python es un <i class="yellow">lenguaje de programación</i>, que tiene
         muchas implementaciones con distintos <i class="red">runtime</i>.
+        <h2>🐍</h2>
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3>...por otro lado</h3>
+        <h3><i class="yellow">...por otro lado</i></h3>
 
-        <h4>
-        Python ha demostrado ser un lenguaje que permite a sistemas
-        muy complejos <i class="green">escalar</i>, por ejemplo:
+        <h4 class="fragment">
+          Python ha demostrado ser un lenguaje que permite <i class="green">escalar</i> sistemas
+        muy complejos, por ejemplo:
         </h4>
 
         <p style="font-size: 80%;" class="fragment">
-          <i class="yellow">YouTube, Dropbox, Disqus, Eventbrite, Reddit, Twilio, Instagram, Yelp, PayPal, etc...</i>
+          <i class="orange">YouTube, Dropbox, Disqus, Eventbrite, Reddit, Twilio, Instagram, Yelp, PayPal, etc...</i>
         </p>
       </section>
 
@@ -105,58 +111,482 @@
 
       <section data-transition="slide-in fade-out">
         <i class="yellow">...entonces</i>
-        <h3>¿cómo se puede mejorar el rendimiento?</h3>
+        <h3>¿cómo puedo mejorar el rendimiento?</h3>
         <h2>🤔</h2>
       </section>
 
+      <section data-transition="slide-in fade-out" data-background-video="img/matrix.mp4" data-background-video-loop>
+        <h1>Programar en Assembly</h1>
+      </section>
+
       <section data-transition="slide-in fade-out">
-        <h3>El rendimiento</h3>
+        <h3><i class="yellow">Rendimiento</i></h3>
         <ul>
-          <li>Tiempo de ejecución</li>
-          <li>Uso de recursos (memoria)</li>
-          <li>Transmisión de datos</li>
-          <li>...</li>
-          <li>tiempo para escribir código</li>
+          <li class="fragment">🕒 Tiempo de ejecución</li>
+          <li class="fragment">🗠 Uso de recursos (memoria)</li>
+          <li class="fragment">🖧 Transmisión de datos</li>
+          <li class="fragment">...</li>
+          <li class="fragment">🧑‍💻 tiempo para escribir código</li>
         </ul>
       </section>
 
       <section data-transition="slide-in fade-out">
-        (Ejemplo de diff de código)
+        <div id="left">
+        C++<br/>
+          <pre style="font-size: 20%;"><code class="c++" data-trim data-noescape>
+            #ifndef MAINWINDOW_H
+            #define MAINWINDOW_H
+
+            #include &lt;QMainWindow&gt;
+            #include &lt;QPushButton&gt;
+
+            class MainWindow : public QMainWindow
+            {
+                Q_OBJECT
+                public:
+                    MainWindow(QWidget *parent = nullptr);
+                private slots:
+                    void handleButton();
+                private:
+                    QPushButton *m_button;
+            };
+
+            #endif // MAINWINDOW_H</code></pre>
+          <pre style="font-size: 20%;"><code class="c++" data-trim data-noescape>
+            #include "mainwindow.h"
+
+            MainWindow::MainWindow(QWidget *parent)
+               : QMainWindow(parent)
+            {
+                m_button = new QPushButton("My Button", this);
+                connect(m_button, SIGNAL(clicked()), this, SLOT(handleButton()));
+            }
+
+            void MainWindow::handleButton()
+            {
+                m_button->setText("Ready");
+            }</code></pre>
+          <pre style="font-size: 20%;"><code class="c++" data-trim data-noescape>
+            #include &lt;QApplication&gt;
+            #include "mainwindow.h"
+
+            int main(int argc, char *argv[])
+            {
+                QApplication app(argc, argv);
+                MainWindow mainWindow;
+                mainWindow.show();
+                return app.exec(d);
+            }</code></pre>
+        </div>
+        <div id="rightl">
+        Python<br/>
+          <pre style="font-size: 20%;"><code class="python" data-trim data-noescape>
+            import sys
+            from pyside6.QtWidgets import QApplication, QMainWindow, QPushButton
+
+            class MainWindow(QMainWindow):
+                def __init__(self, parent=None):
+                    QMainWindow.__init__(self, parent)
+                    self.button = QPushButton("My Button", self)
+                    self.button.clicked.connect(self.handleButton)
+
+                def handleButton(self):
+                    self.button.setText("Ready")
+
+            if __name__ == "__main__":
+                app = QApplication(sys.argv)
+                mainWindow = MainWindow()
+                mainWindow.show()
+                sys.exit(app.exec())</code></pre>
+        </div>
+      </section>
+
+      <section data-transition="slide-in fade-out" data-background-color="rgb(52,103,146)">
+        <h1>Midiendo el <i class="yellow">tiempo</i></h1>
+      </section>
+
+      <section data-transition="slide-in">
+        <img src="img/time_time.png"/>
+      </section>
+
+      <section data-transition="fade-out">
+        <img src="img/time_time2.png"/>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <pre style="font-size: 100%;"><code class="python" data-trim data-noescape>
+          import time
+          print(time.time() - time.time())
+        </code></pre>
+        ¿?
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <img src="img/time_perf_counter.png"/>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <div id="left">
+        <pre style="font-size: 45%;"><code class="python" data-trim data-noescape>
+        import time
+
+        def f(lst, v):
+            total = 0
+            t1 = time.time()
+            for i in lst:
+                total += i ** v
+            t2 = time.time()
+            return total, t2-t1
+
+        def g(lst, v):
+            total = 0
+            t1 = time.perf_counter_ns()
+            for i in lst:
+                total += i ** v
+            t2 = time.perf_counter_ns()
+            return total, (t2-t1)/(10**9)
+        </code></pre>
+        </div>
+        <div id="right">
+        <pre style="font-size: 35%;"><code class="python fragment" data-trim data-noescape>
+        print("Using time.time()")
+        print(f([1,2], 1))
+        print(f(range(10), 2))
+        print(f(range(100), 3))
+        print(f(range(10_000), 2))
+
+        print("Using time.perf_counter_ns()")
+        print(g([1,2], 1))
+        print(g(range(10), 2))
+        print(g(range(100), 3))
+        print(g(range(10_000), 2))
+        </code></pre>
+        <pre style="font-size: 45%;"><code class="python fragment" data-trim data-noescape>
+        # Using time.time()
+        (1, 4.76837158203125e-07)
+        (3, 4.76837158203125e-07)
+        (285, 2.384185791015625e-06)
+        (24502500, 2.2649765014648438e-05)
+        (333283335000, 0.001733541488647461)
+
+        # Using time.perf_counter_ns()
+        (1, 5e-07)
+        (3, 5.5e-07)
+        (285, 1.96e-06)
+        (24502500, 1.717e-05)
+        (333283335000, 0.001738651)
+        </code></pre>
+        </div>
+      </section>
+
+      <section data-transition="slide-in fade-out" data-background-color="rgb(52,103,146)">
+        <h1>Perfilando</h1>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3><code>cProfile</code></h3>
+        <pre style="font-size: 90%; width: 80%;"><code class="bash" data-trim data-noescape>
+        python -m cProfile main.py
+        </code></pre>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3><code>cProfile</code> (1/2)</h3>
+        <pre style="font-size: 40%; width: 80%;"><code class="python" data-trim data-noescape>
+        import random
+
+        def f(lst):
+            t = 0
+            for i in lst:
+                for j in i:
+                    t += j
+            return t
+
+        def g(lst):
+            t = 0
+            for i in lst:
+                t += sum(i)
+            return t
+
+        N = 5_000
+        l =  [[random.random() for i in range(N) for _ in range(N)]]
+        print(f(l))
+        print(g(l))
+        </code></pre>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3><code>cProfile</code> (2/2)</h3>
+        <pre style="font-size: 40%; width: 100%;"><code class="bash" data-trim data-noescape>
+25001425 function calls (25001398 primitive calls) in 3.828 seconds
+
+   Ordered by: cumulative time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+      3/1    0.000    0.000    3.828    3.828 {built-in method builtins.exec}
+        1    0.000    0.000    3.827    3.827 perfil.py:1(<module>)
+        1    2.196    2.196    3.149    3.149 perfil.py:18(<listcomp>)
+ 25000000    0.953    0.000    0.953    0.000 {method 'random' of '_random.Random' objects}
+        1    0.596    0.596    0.596    0.596 perfil.py:3(f)
+        1    0.000    0.000    0.082    0.082 perfil.py:10(g)
+        1    0.082    0.082    0.082    0.082 {built-in method builtins.sum}
+      6/1    0.000    0.000    0.001    0.001 <frozen importlib._bootstrap>:1022(_find_and_load)
+      6/1    0.000    0.000    0.001    0.001 <frozen importlib._bootstrap>:987(_find_and_load_unlocked)
+      6/1    0.000    0.000    0.001    0.001 <frozen importlib._bootstrap>:664(_load_unlocked)
+      2/1    0.000    0.000    0.001    0.001 <frozen importlib._bootstrap_external>:877(exec_module)
+     10/1    0.000    0.000    0.001    0.001 <frozen importlib._bootstrap>:233(_call_with_frames_removed)
+        1    0.000    0.000    0.001    0.001 random.py:1(<module>)
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:921(_find_spec)
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1431(find_spec)
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1399(_get_spec)
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:564(module_from_spec)
+       22    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1536(find_spec)
+        4    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1174(create_module)
+        4    0.000    0.000    0.000    0.000 {built-in method _imp.create_dynamic}
+        1    0.000    0.000    0.000    0.000 bisect.py:1(<module>)
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:950(get_code)
+       96    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:126(_path_join)
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:492(_init_module_attrs)
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:670(_compile_bytecode)
+        2    0.000    0.000    0.000    0.000 {built-in method builtins.print}
+        2    0.000    0.000    0.000    0.000 {built-in method marshal.loads}
+        4    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1070(get_data)
+       96    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:128(<listcomp>)
+       30    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:140(_path_stat)
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:198(cb)
+       30    0.000    0.000    0.000    0.000 {built-in method posix.stat}
+       12    0.000    0.000    0.000    0.000 {method 'get' of 'dict' objects}
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:169(__enter__)
+        8    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:391(cached)
+        4    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:380(cache_from_source)
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:510(_get_cached)
+        2    0.000    0.000    0.000    0.000 {built-in method builtins.__build_class__}
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1531(_get_spec)
+        4    0.000    0.000    0.000    0.000 {built-in method io.open_code}
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:179(_get_module_lock)
+       42    0.000    0.000    0.000    0.000 {built-in method builtins.getattr}
+        6    0.000    0.000    0.000    0.000 __init__.py:89(find_spec)
+      110    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:244(_verbose_message)
+        4    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1182(exec_module)
+       28    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1356(_path_importer_cache)
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:721(spec_from_file_location)
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:159(_path_isfile)
+        4    0.000    0.000    0.000    0.000 {method 'read' of '_io.BufferedReader' objects}
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:150(_path_is_mode_type)
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:100(acquire)
+        4    0.000    0.000    0.000    0.000 {built-in method _imp.exec_dynamic}
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:173(__exit__)
+      196    0.000    0.000    0.000    0.000 {method 'rstrip' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 random.py:119(__init__)
+        1    0.000    0.000    0.000    0.000 random.py:128(seed)
+      100    0.000    0.000    0.000    0.000 {method 'join' of 'str' objects}
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:125(release)
+        2    0.000    0.000    0.000    0.000 {built-in method _imp.source_hash}
+        4    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:132(_path_split)
+       24    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:897(__exit__)
+        1    0.000    0.000    0.000    0.000 {function Random.seed at 0x7fa9576d9d80}
+       24    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:893(__enter__)
+        6    0.000    0.000    0.000    0.000 {built-in method posix.getcwd}
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:71(__init__)
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:585(_classify_pyc)
+        4    0.000    0.000    0.000    0.000 {method '__exit__' of '_io._IOBase' objects}
+        4    0.000    0.000    0.000    0.000 {built-in method builtins.max}
+        1    0.000    0.000    0.000    0.000 random.py:103(Random)
+       35    0.000    0.000    0.000    0.000 {built-in method builtins.hasattr}
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:746(find_spec)
+        6    0.000    0.000    0.000    0.000 {method 'format' of 'str' objects}
+       38    0.000    0.000    0.000    0.000 {method 'rpartition' of 'str' objects}
+        6    0.000    0.000    0.000    0.000 {built-in method builtins.locals}
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1089(path_stats)
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:404(parent)
+       36    0.000    0.000    0.000    0.000 {built-in method builtins.isinstance}
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:180(_path_isabs)
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:357(__init__)
+       36    0.000    0.000    0.000    0.000 {built-in method _imp.acquire_lock}
+       36    0.000    0.000    0.000    0.000 {built-in method _imp.release_lock}
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:826(find_spec)
+       10    0.000    0.000    0.000    0.000 {method 'endswith' of 'str' objects}
+        8    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:134(<genexpr>)
+        1    0.000    0.000    0.000    0.000 {built-in method math.exp}
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:84(_unpack_uint32)
+       22    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:71(_relax_case)
+        6    0.000    0.000    0.000    0.000 {built-in method _imp.is_builtin}
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:165(__init__)
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:542(_check_name_wrapper)
+       12    0.000    0.000    0.000    0.000 {built-in method _thread.allocate_lock}
+       12    0.000    0.000    0.000    0.000 {method '__exit__' of '_thread.lock' objects}
+        6    0.000    0.000    0.000    0.000 {method 'startswith' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 random.py:219(__init_subclass__)
+       12    0.000    0.000    0.000    0.000 {built-in method _thread.get_ident}
+        4    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1163(__init__)
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:48(_new_module)
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        6    0.000    0.000    0.000    0.000 {built-in method _imp.is_frozen}
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:412(has_location)
+       10    0.000    0.000    0.000    0.000 {built-in method posix.fspath}
+        6    0.000    0.000    0.000    0.000 {method 'pop' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 {built-in method posix.register_at_fork}
+        1    0.000    0.000    0.000    0.000 random.py:813(SystemRandom)
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:646(_validate_hash_pyc)
+        4    0.000    0.000    0.000    0.000 {method 'rfind' of 'str' objects}
+        2    0.000    0.000    0.000    0.000 {built-in method math.log}
+        6    0.000    0.000    0.000    0.000 __init__.py:96(<lambda>)
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1040(__init__)
+        4    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1065(get_filename)
+        2    0.000    0.000    0.000    0.000 {built-in method from_bytes}
+        2    0.000    0.000    0.000    0.000 {built-in method _imp._fix_co_filename}
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:874(create_module)
+        1    0.000    0.000    0.000    0.000 {built-in method math.sqrt}
+        </code></pre>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h1>¡Hay más opciones!</h1>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3>Detalles de perfiladores</h3>
+        <ul>
+          <li>¿Líneas o Funciones?</li>
+          <li>¿<i>Sampling</i> o <i>Tracing</i>?</li>
+          <li>¿Se debe modificar el código?</li>
+          <li>¿Suporte de hilos?</li>
+          <li>¿Multi-processing?</li>
+          <li>¿tiempo en C?</li>
+          <li>leaks, copy, memory, ...</li>
+          <li>...GPU?</li>
+        </ul>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3><code>pip install pyinstrument</code></h3>
+        <div id="left">
+        <pre style="font-size: 40%; width: 80%;"><code class="python" data-trim data-noescape>
+        from pyinstrument import Profiler
+
+        profiler = Profiler()
+        profiler.start()
+
+        # code you want to profile
+
+        profiler.stop()
+
+        profiler.print()
+        </code></pre>
+        </div>
+        <div id="right">
+          <ul>
+            <li>Python 3.7+</li>
+            <li>sampling / functions</li>
+            <li>Compatible con Jupyter, Django, Flask, FastAPI, Pytest</li>
+          </ul>
+        </div>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3><code>pip install py-spy</code></h3>
+        <div id="left">
+        <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
+        py-spy record -o profile.svg --pid 12345
+        # OR
+        py-spy record -o profile.svg -- python main.py
+        </code></pre>
+        <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
+        py-spy top --pid 12345
+        # OR
+        py-spy top -- python main.py
+        </code></pre>
+        <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
+        py-spy dump --pid 12345
+        </code></pre>
+        </div>
+        <div id="right">
+          <ul>
+            <li>Python 2.3, 2.7, 3.3+</li>
+            <li>sampling / lines</li>
+            <li>permite visualización</li>
+          </ul>
+        </div>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3><code>pip install yappi</code></h3>
+        <div id="left">
+        <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
+        import yappi
+
+        def a():
+            for _ in range(10000000):  # do something CPU heavy
+                pass
+
+        yappi.set_clock_type("cpu") # Use set_clock_type("wall") for wall time
+        yappi.start()
+        a()
+
+        yappi.get_func_stats().print_all()
+        yappi.get_thread_stats().print_all()
+        </code></pre>
+        </div>
+        <div id="right">
+          <ul>
+            <li>Python 2.3, 2.7, 3.3+</li>
+            <li>tracing / functions</li>
+          </ul>
+        </div>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3><code>austin</code></h3>
+        <div id="left">
+        <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
+        austin python main.py
+        </code></pre>
+        <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
+        austin -p 123
+        </code></pre>
+        </div>
+        <div id="right">
+          <ul>
+            <li>CPython</li>
+            <li>sampler / lines</li>
+            <li>Visualización</li>
+          </ul>
+        </div>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3><code>pip install line_profiler</code></h3>
+        <div id="left">
+        <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
+        kernprof -l main.py
+        </code></pre>
+        <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
+        python -m line_profile main.py.lprof
+        </code></pre>
+        </div>
+        <div id="right">
+          <ul>
+            <li>Python 3.6+</li>
+            <li>tracing / lines</li>
+            <li>Motivación con extensiones</li>
+          </ul>
+        </div>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3><code>pip install scalene</code> (1/2)</h3>
+        <img src="img/profiler-comparison.png"/>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3><code>pip install scalene</code> (2/2)</h3>
+        <img src="img/cpu-accuracy-comparison.png"/>
       </section>
 
 
-      <section data-transition="slide-in fade-out">
-        <h3>Perfilamiento</h3>
-python -m cProfile main.py
-      </section>
-
-      <section data-transition="slide-in fade-out">
-        <h3>Perfilamiento - funciones</h3>
-Profile, xxx, Profile
-pprofile, xxx, line
-memory_profiler, xxx, line
-
-cprofile, tracing, function
-pyinstrument, sampling, function
-py-spy, sampling, function
-yappi, tracing, function
-      </section>
-
-      <section data-transition="slide-in fade-out">
-        <h3>Perfilamiento - líneas</h3>
-austin, sampler, line
-scalene, sampler, line/functions
-line_profiler, XXX, line
-      </section>
-
-      <section data-transition="slide-in fade-out">
-        <h3>Scalene</h3>
-scalene, copy data, unnecesary casting
-      </section>
-
-
-      <section data-transition="slide-in fade-out">
-Accuracy
+      <section data-transition="slide-in fade-out" data-background-color="rgb(52,103,146)">
+        <h1>Detalles de implementación</i></h1>
       </section>
 
       <section data-transition="slide-in fade-out">
@@ -169,21 +599,43 @@ Accuracy
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3><i>Casting</i> innecesario</h3>
-Avoid extra casting
-    - list(tuple)
+        <h3><i>Casting</i> innecesarios (1/2)</h3>
+        <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
+        >>> timeit.timeit("s = t[:]", setup="import random;import string;t = random.choices(string.ascii_letters, k=1_000)")
+        0.9558109600038733
+        >>> timeit.timeit("s = t", setup="import random;import string;t = random.choices(string.ascii_letters, k=1_000)")
+        0.010780797019833699
+        >>> timeit.timeit("s = str(t)", setup="import random;import string;t = random.choices(string.ascii_letters, k=1_000)")
+        23.832692831987515
+        </code></pre>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3><i>Casting</i> innecesarios (1/2)</h3>
+        <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
+        numpy.array TODO
+        </code></pre>
       </section>
 
       <section data-transition="slide-in fade-out">
         <h3>¿Búcles o <i>Comprehensions</i>?</h3>
-Missing comprehensions
-- comprehension en vez de for loop
+        <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
+        def f(years):
+          leaps = []
+          for year in years:
+              if is_leap(year)
+                leaps.append(year)
+          return leaps
+
+        def g(years):
+          return [year for year in years if is_leap(year)]
+        </code></pre>
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3>Búcles simples</h3>
-Loop invariance
-- cosas que no cambian en cada iteración
+        <h3>Búcles simples y limpios</h3>
+        <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
+        </code></pre>
       </section>
 
       <section data-transition="slide-in fade-out">
