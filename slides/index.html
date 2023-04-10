@@ -447,15 +447,15 @@
 
       <section data-transition="slide-in fade-out">
         <h3>Detalles de perfiladores</h3>
-        <ul>
-          <li>¿Líneas o Funciones?</li>
-          <li>¿<i>Sampling</i> o <i>Tracing</i>?</li>
-          <li>¿Se debe modificar el código?</li>
-          <li>¿Suporte de hilos?</li>
-          <li>¿Multi-processing?</li>
-          <li>¿tiempo en C?</li>
-          <li>leaks, copy, memory, ...</li>
-          <li>...GPU?</li>
+        <ul style="font-size: 80%;">
+          <li class="fragment">¿Líneas o Funciones?</li>
+          <li class="fragment">¿<i>Sampling</i> o <i>Tracing</i>?</li>
+          <li class="fragment">¿Se debe modificar el código?</li>
+          <li class="fragment">¿Suporte de hilos?</li>
+          <li class="fragment">¿Multi-processing?</li>
+          <li class="fragment">¿tiempo en C?</li>
+          <li class="fragment">leaks, copy, memory, ...</li>
+          <li class="fragment">...GPU?</li>
         </ul>
       </section>
 
@@ -575,23 +575,39 @@
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3><code>pip install scalene</code> (1/2)</h3>
-        <img src="img/profiler-comparison.png"/>
+        <h3><code>pip install scalene</code> (1/4)</h3>
+        <ul>
+          <li>CPU + GPU</li>
+          <li>Sugerencias IA</li>
+          <li>Compatible con Jupyter</li>
+          <li>...</li>
+        </ul>
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3><code>pip install scalene</code> (2/2)</h3>
-        <img src="img/cpu-accuracy-comparison.png"/>
+        <h3><code>pip install scalene</code> (2/4)</h3>
+        <img src="img/sample-profile-pystone.png"/>
+        <p style="font-size: 60%;">(de <a href="https://github.com/plasma-umass/scalene">github.com/plasma-umass/scalene</a>)
       </section>
 
+      <section data-transition="slide-in fade-out">
+        <h3><code>pip install scalene</code> (3/4)</h3>
+        <img src="img/profiler-comparison.png"/>
+        <p style="font-size: 60%;">(de <a href="https://github.com/plasma-umass/scalene">github.com/plasma-umass/scalene</a>)
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3><code>pip install scalene</code> (4/4)</h3>
+        <img src="img/cpu-accuracy-comparison.png"/>
+        <p style="font-size: 60%;">(de <a href="https://github.com/plasma-umass/scalene">github.com/plasma-umass/scalene</a>)
+      </section>
 
       <section data-transition="slide-in fade-out" data-background-color="rgb(52,103,146)">
         <h1>Detalles de implementación</i></h1>
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3>Efecto mariposa</h3>
-        cambios pequeños para un impacto grande
+        <img src="img/mariposa.png"/>
       </section>
 
       <section data-transition="slide-in fade-out">
@@ -599,27 +615,38 @@
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3><i>Casting</i> innecesarios (1/2)</h3>
-        <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
-        >>> timeit.timeit("s = t[:]", setup="import random;import string;t = random.choices(string.ascii_letters, k=1_000)")
+        <h3><i>Casting</i> innecesarios</h3>
+        <div id="left">
+          <p style="font-size: 80%;"><i class="yellow">Copiando un <code>str</code></i></p>
+          <pre style="font-size: 40%; width: 90%;"><code class="python" data-trim data-noescape>
+          # Llamemos todo esto "test_code"
+          import random
+          import string
+          t = random.choices(string.ascii_letters,
+                             k=1_000)
+          </code></pre>
+          <pre style="font-size: 40%; width: 90%;"><code class="python fragment" data-trim data-noescape>
+          s = t[:]    # ?
+          s = t       # ?
+          s = str(t)  # ?
+          </code></pre>
+        </div>
+        <div id="right">
+        <pre style="font-size: 35%; width: 90%;"><code class="python fragment" data-trim data-noescape>
+        >>> timeit.timeit("s = t[:]", setup=test_code)
         0.9558109600038733
-        >>> timeit.timeit("s = t", setup="import random;import string;t = random.choices(string.ascii_letters, k=1_000)")
+        >>> timeit.timeit("s = t", setup=test_code)
         0.010780797019833699
-        >>> timeit.timeit("s = str(t)", setup="import random;import string;t = random.choices(string.ascii_letters, k=1_000)")
+        >>> timeit.timeit("s = str(t)", setup=test_code)
         23.832692831987515
         </code></pre>
+        </div>
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3><i>Casting</i> innecesarios (1/2)</h3>
-        <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
-        numpy.array TODO
-        </code></pre>
-      </section>
-
-      <section data-transition="slide-in fade-out">
-        <h3>¿Búcles o <i>Comprehensions</i>?</h3>
-        <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
+        <h3>¿Búcles o <i>Comprehensions</i>? (1/2)</h3>
+        <div id="left">
+        <pre style="font-size: 40%; width: 90%;"><code class="python" data-trim data-noescape>
         def f(years):
           leaps = []
           for year in years:
@@ -628,59 +655,437 @@
           return leaps
 
         def g(years):
-          return [year for year in years if is_leap(year)]
+          return [year
+            for year in years if is_leap(year)]
         </code></pre>
+        </div>
+        <div id="right">
+          <pre style="font-size: 40%; width: 100%;"><code class="python fragment" data-trim data-noescape>
+          loop          0.916669155
+          comprehension 0.788457791
+          fraction      86.01334371286879
+          </code></pre>
+        </div>
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3>Búcles simples y limpios</h3>
-        <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
+        <h3>¿Búcles o <i>Comprehensions</i>? (2/2)</h3>
+        <div id="left">
+        <pre style="font-size: 40%; width: 90%;"><code class="python" data-trim data-noescape>
+        def f():
+          r = []
+          for i in range(N):
+            if i % 2 == 0:
+                r.append(i**3)
+          return r
+
+        def g():
+          return [i**3
+            for i in range(N) if i%2 == 0]
         </code></pre>
+        </div>
+        <div id="right">
+          <pre style="font-size: 40%; width: 100%;"><code class="python fragment" data-trim data-noescape>
+          loop          0.012062598
+          comprehension 0.010817907
+          fraction      89.681401966641
+          </code></pre>
+        </div>
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3>¿Funciones o no Funciones?</h3>
-Llamando funciones es más lento que el código explícito
+        <h3>¿Funciones o no?</h3>
+        <div id="left">
+        <pre style="font-size: 40%; width: 90%;"><code class="python" data-trim data-noescape>
+        def calculo(x, y):
+            return 10**x + y
+
+        def f():
+            base = 2
+            r = 0
+            for i in range(1_000_000):
+                r += calculo(base, i)
+            return r
+
+        def g():
+            base = 2
+            r = 0
+            for i in range(1_000_000):
+                r += 10**base + i
+            return r
+        </code></pre>
+        </div>
+        <div id="right">
+          <pre style="font-size: 40%; width: 100%;"><code class="python fragment" data-trim data-noescape>
+          función   0.221610124
+          operación 0.18534425
+          fraction  83.6352810307529
+          </code></pre>
+        </div>
+      </section>
+
+
+      <section data-transition="slide-in fade-out">
+        <h3>Estructuras básicas (1/3)</h3>
+        Para cadenas:
+        <p><i class="yellow">¿manipulación de datos binarios?</i></p>
+        <ul>
+          <li class="fragment"><i class="green">sí</i>: <code>bytes</code></li>
+          <li class="fragment"><i class="red">no</i>: <code>str</code></li>
+        </ul>
+          <pre style="font-size: 40%; width: 100%;"><code class="python fragment" data-trim data-noescape>
+          >>> import sys
+          >>> a = b"Hola"
+          >>> b = "Hola"
+          >>> sys.getsizeof(a)
+          37
+          >>> sys.getsizeof(b)
+          53
+          </code></pre>
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3>¿str, bytes, ...?</h3>
-Selecting the proper data structure.
-- mutable, type of content, unique items.
+        <h3>Estructuras básicas (2/3)</h3>
+        Para datos mutables:
+        <p><i class="yellow">¿son únicos?</i></p>
+        <ul>
+          <li class="fragment"><i class="red">no</i>: <code>list</code></li>
+          <li class="fragment"><i class="green">sí</i>: <code>set</code></li>
+        </ul>
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3>Contenedores</h3>
-Selecting the proper data structure.
-- mutable, type of content, unique items.
+        <h3>Estructuras básicas (3/3)</h3>
+        Para datos <i class="red">no</i> mutables:
+        <p><i class="yellow">¿son únicos?</i></p>
+        <ul>
+          <li class="fragment"><i class="red">no</i>: <code>tuple</code></li>
+          <li class="fragment"><i class="green">sí</i>: <code>frozenset</code></li>
+        </ul>
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3>Clases, Data clases, ..</h3>
-Class, dataclass, dict, namedtuple
-    -class faster than dataclass/namedtuple
+        <h3>¿Clases, Data clases, NamedTuple?</h3>
+          <div id="left">
+            <pre style="font-size: 40%; width: 90%;"><code class="python" data-trim data-noescape>
+            class Persona1:
+              def __init__(self, nombre, edad):
+                self.nombre = nombre
+                self.edad = edad
+              # def __repr__(self) ¿quizás?
+            </code></pre>
+            <pre style="font-size: 40%; width: 90%;"><code class="python fragment" data-trim data-noescape>
+            @dataclass
+            class Persona2:
+              nombre: str
+              edad: int
+            </code></pre>
+          </div>
+          <div id="right">
+            <pre style="font-size: 40%; width: 90%;"><code class="python fragment" data-trim data-noescape>
+            from collections import namedtuple
+
+            Persona3 = namedtuple("Persona3",
+                        ["nombre", "edad"])
+
+            class Persona4(typing.NamedTuple):
+              nombre: str
+              edad: int
+            </code></pre>
+
+            <pre style="font-size: 40%; width: 90%;"><code class="bash fragment" data-trim data-noescape>
+            Persona1 0.00014439
+            Persona2 0.005883264
+            Persona3 0.0001975
+            Persona4 0.001248471
+            </code></pre>
+
+          </div>
+      </section>
+
+
+      <section data-transition="slide-in fade-out" data-background-color="rgb(52,103,146)">
+        <h2>¿No es suficiente?</h2>
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3>"El Diagrama"</h3>
+        <h3>Caching - <code>functools</code></h3>
+        <p style="font-size: 80%;"><a href="https://docs.python.org/es/3/library/functools.html">docs.python.org/es/3/library/functools.html</a></p>
+        <div id="left">
+          <pre style="font-size: 40%; width: 90%;"><code class="python" data-trim data-noescape>
+          import functools
+
+
+          @functools.cache
+          def factorial(n):
+              return n * factorial(n-1) if n else 1
+
+          # factorial(400): 0.00023379
+          # factorial(400): 4.4e-07
+
+          </code></pre>
+        </div>
+        <div id="right">
+          <pre style="font-size: 40%; width: 90%;"><code class="python fragment" data-trim data-noescape>
+          import functools
+
+
+          @functools.lru_cache
+          def factorial(n):
+              return n * factorial(n-1) if n else 1
+
+          # factorial(400): 0.00011717
+          # factorial(400): 3e-07
+          </code></pre>
+        </div>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3>Cython</h3>
+        <p style="font-size: 80%;"><a href="https://cython.readthedocs.io">https://cython.readthedocs.io</a></p>
+        <div id="left">
+          <pre style="font-size: 40%; width: 90%;"><code class="python" data-trim data-noescape>
+          # fib.pyx
+          def fib(n):
+            """Print Fibonacci series up to n."""
+            a, b = 0, 1
+            while b < n:
+                print(b, end=' ')
+                a, b = b, a + b
+
+            print()
+          </code></pre>
+        </div>
+        <div id="right">
+          <pre style="font-size: 40%; width: 90%;"><code class="python fragment" data-trim data-noescape>
+          # setup.py
+          from setuptools import setup
+          from Cython.Build import cythonize
+
+          setup(
+              ext_modules=cythonize("fib.pyx"),
+          )
+          </code></pre>
+          <pre style="font-size: 40%; width: 90%;"><code class="bash fragment" data-trim data-noescape>
+          $ python setup.py build_ext --inplace
+          </code></pre>
+          <pre style="font-size: 30%; width: 90%;"><code class="python fragment" data-trim data-noescape>
+          >>> import fib
+          >>> fib.fib(2000)
+          1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597
+          </code></pre>
+        </div>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3>Numba</h3>
+        <p style="font-size: 80%;"><a href="https://numba.pydata.org">numba.pydata.org</a></p>
+        <div id="left">
+          <pre style="font-size: 40%; width: 90%;"><code class="python fragment" data-trim data-noescape>
+          from numba import njit
+          import random
+
+          @njit
+          def monte_carlo_pi(nsamples):
+              acc = 0
+              for i in range(nsamples):
+                  x = random.random()
+                  y = random.random()
+                  if (x ** 2 + y ** 2) < 1.0:
+                      acc += 1
+              return 4.0 * acc / nsamples
+          </code></pre>
+        </div>
+        <div id="right">
+          <ul>
+            <li class="fragment">Ejecutar operaciones en paralelo</li>
+            <li class="fragment">Vectorización SIMD</li>
+            <li class="fragment">Aceleración con GPU</li>
+          </ul>
+        </div>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3>PyPy (1/2)</h3>
+        <p style="font-size: 80%;"><a href="https://pypy.org">pypy.org</a></p>
+        <div id="left">
+          <ul>
+            <li class="fragment">Reemplazo de CPython</li>
+            <li class="fragment">No siempre las últimas versiones (3.9.15)</li>
+            <li class="fragment"><i class="yellow">Escrito en Python</i> 🤯</li>
+          </ul>
+        </div>
+        <div id="right">
+          <pre style="font-size: 70%; width: 90%;"><code class="python fragment" data-trim data-noescape>
+          # ...no hay código
+          # porque es...Python
+          # ...
+          # ¿Lo conoces no? :P
+          </code></pre>
+        </div>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3>PyPy (2/2)</h3>
+        <p style="font-size: 80%;"><a href="https://pypy.org">pypy.org</a></p>
+        <img style="width: 80%;" src="img/pypy_speed_graph.png"/>
+      </section>
+
+      <section data-transition="slide-in fade-out" data-background-color="rgb(216,44,29)">
+        <h2>¡No es suficiente!</h2>
+      </section>
+
+  <section data-transition="slide-in fade-out">
+        <h3>Crea una extensión (1/3) - <i class="yellow">en C</i></h3>
+    <p>simple.c</p>
+    <pre class="fragment fade-in" data-fragment-index="1"style="font-size: 38%;width: 100%;"><code class="c" data-trim data-noescape>
+    <span class="fragment" data-fragment-index="1">#include &lt;Python.h&gt;</span>
+    <span class="fragment" data-fragment-index="2">static PyObject* simple_hola(PyObject* self, PyObject* args){
+    <span class="fragment" data-fragment-index="2">    char *msg = "Holi :D";</span>
+    <span class="fragment" data-fragment-index="2">    return Py_BuildValue("s", msg);</span>
+    <span class="fragment" data-fragment-index="2">}</span>
+
+    <span class="fragment" data-fragment-index="3">static char simple_docs[] = "hola(): imprime hola\n";</span>
+
+    <span class="fragment" data-fragment-index="4">static PyMethodDef funciones[] = {</span>
+    <span class="fragment" data-fragment-index="4">   {"hola",  (PyCFunction)simple_hola, METH_NOARGS, simple_docs},</span>
+    <span class="fragment" data-fragment-index="4">   {NULL, NULL, NULL, NULL}</span>
+    <span class="fragment" data-fragment-index="4">};</span>
+
+    <span class="fragment" data-fragment-index="5">static struct PyModuleDef simplemodule = {</span>
+    <span class="fragment" data-fragment-index="5">    PyModuleDef_HEAD_INIT, "simple", NULL, -1, funciones</span>
+    <span class="fragment" data-fragment-index="5">};</span>
+
+    <span class="fragment" data-fragment-index="6">PyMODINIT_FUNC PyInit_simple(void){</span>
+    <span class="fragment" data-fragment-index="6">    return PyModule_Create(&amp;simplemodule);</span>
+    <span class="fragment" data-fragment-index="6">}</span>
+    </code></pre>
+  </section>
+
+  <section data-transition="slide-in fade-out">
+        <h3>Crea una extensión (2/3) - <i class="yellow">en C</i></h3>
+    <h3><i class="yellow">setup.py</i></h3>
+    <pre class="fragment fade-in" data-fragment-index="1"style="font-size: 50%;width: 100%;"><code class="python fragment" data-trim data-noescape>
+    from setuptools import setup, Extension
+
+    setup(name='simple', version='1.0',
+          ext_modules=[Extension('simple', ['simple.c'])])
+    </code></pre>
+    <h3><i class="yellow">pyproject.toml</i></h3>
+    <pre class="fragment fade-in" data-fragment-index="1"style="font-size: 50%;width: 100%;"><code class="python fragment" data-trim data-noescape>
+    [build-system]
+    requires = ["setuptools"]
+    build-backend = "setuptools.build_meta"
+    </code></pre>
+  </section>
+
+  <section data-transition="slide-in fade-out">
+        <h3>Crea una extensión (3/3) - <i class="yellow">en C</i></h3>
+    <h3><i class="yellow">construir</i></h3>
+    <pre class="fragment fade-in" data-fragment-index="1"style="font-size: 80%;width: 100%;"><code class="bash fragment" data-trim data-noescape>
+    python -m build
+    </code></pre>
+  </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3>Crea una extensión - <i class="yellow">en Rust</i></h3>
+        <img src="img/rust.png">
+        <p><a href="https://ohadravid.github.io/posts/2023-03-rusty-python/">ohadravid.github.io/posts/2023-03-rusty-python/</a></p>
       </section>
 
 
       <section data-transition="slide-in fade-out">
-        <h3>Recomendaciones en módulos</h3>
-glob, pathlib, ...
-numpy
-pyside6
-pandas
+        <h3>Recomendaciones en módulos (1/4)</h3>
+        <div id="left">
+          <ul>
+            <li class="fragment"><i class="yellow">Iterar archivos y directorios</i></li>
+            <li class="fragment">¿<code>glob</code>?</li>
+            <li class="fragment">¿<code>Pathlib.glob</code>?</li>
+          </ul>
+        </div>
+        <div id="right">
+        <pre class="fade-in" data-fragment-index="1"style="font-size: 50%;width: 100%;"><code class="bash fragment" data-trim data-noescape>
+          Directories: 172246
+          Files: 2360091
+
+          # glob
+          Non recursive: 0.01
+          Recursive: 4.04
+
+          # Pathlib.glob
+          Non recursive: 0.41
+          Recursive: 1.52
+
+          # fastglob.glob
+          Non recursive: 0.02
+          Recursive: 0.33
+        </code></pre>
+        </div>
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3>¿No es suficiente?</h3>
-caching
-re-write cython
-Using pypy
-Create an extension in your favorite low-level language
+        <h3>Recomendaciones en módulos (2/4)</h3>
+        <h4>std::filesystem::directory_iterator</h4>
+        <img src="img/doc_fs.png" style="width: 80%;"/>
       </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3>Recomendaciones en módulos (3/4)</h3>
+        <p><i class="yellow">numpy</i></p>
+        <img src="img/numpy.png" style="width: 80%;"/>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3>Recomendaciones en módulos (3/4)</h3>
+        <p><i class="yellow">pandas</i></p>
+        <ul>
+          <li class="fragment"><code>.iterrows()</code> → <code>.apply(lambda ... )</code> </li>
+          <li class="fragment"><code>.iterrows()</code> → <code>.itertuples()</code></li>
+          <li class="fragment"><code>.isin()</code></li>
+        </ul>
+      </section>
+
+      <section data-transition="slide-in fade-out" data-background-color="rgb(216,44,29)">
+        <h2>¡Necesito más!</h2>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3>3.11 -  <i class="green">10-60% más rápido</i> que 3.10</h3>
+        <h2>3.12 - 📈</h2>
+      </section>
+
+
+      <section data-transition="slide-in fade-out" data-background-color="rgb(216,44,29)">
+        <h2>¿Aplicaste todo esto y no te sirvió nada?</h2>
+        <h2>😒</h2>
+      </section>
+
+      <section data-transition="slide-in fade-out" data-background-color="rgb(0,170,127)">
+        <h2>Quizás es hora de utilizar otro lenguaje</h2>
+        <h2>🫠</h2>
+      </section>
+
+      <section data-background-image="img/cover.png">
+        <div id="left70">
+          <h2 style="font-size: 1.1em;">¿Por qué <strike style="text-decoration-thickness: 6px;"><i class="ep-red">Python</i></strike> <i class="yellow">tu código</i> es lento?</h2>
+          <h4 style="font-size: 80%;"><i class="blue">recomendaciones para mejorar el rendimiento</i></h4>
+        <p style="font-size: 70%;margin-top: 10%;">
+          Dr. <i class="yellow">Cristián</i> Maureira-Fredes
+        </p>
+        <p style="font-size: 50%">
+          Senior R&amp;D Manager en  <img class="plain" src="img/qt.png" style="height: 50px; vertical-align: middle; background: rgba(0, 0, 0, 0);">
+          <br/>
+          @cmaureir<br/>
+          <img class="plain" src="img/mastodon.png" style="background: rgba(0,0,0,0);height: 40px;">
+          <img class="plain" src="img/github_white.png"  style="background: rgba(0,0,0,0);height: 40px;">
+          <img class="plain" src="img/linkedin.png"  style="background: rgba(0,0,0,0);height: 40px;">
+          <img class="plain" src="img/twitter.png" style="background: rgba(0,0,0,0);height: 40px;"><br/>
+        </p>
+        </div>
+        <div id="right30">
+        </div>
+      </section>
+
 
 
       <!--***************************************************************************-->
