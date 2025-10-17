@@ -6,26 +6,27 @@
 
   <title>Recomendaciones de rendimiento para Python</title>
 
-  <link rel="stylesheet" href="dist/reset.css">
-  <link rel="stylesheet" href="dist/reveal.css">
-  <link rel="stylesheet" href="css/self-theme.css" id="theme">
-  <link rel="stylesheet" href="css/self.css" id="theme">
+  <link rel="stylesheet" href="reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="css/personal-theme.css">
+  <link rel="stylesheet" href="css/qt.css">
   <link rel="stylesheet" href="css/extras.css">
+  <link rel="stylesheet" href="css/self.css">
 
   <!-- Theme used for syntax highlighted code -->
-  <link rel="stylesheet" href="plugin/highlight/monokai.css">
-
+  <link rel="stylesheet" href="reveal.js/plugin/highlight/monokai.css">
   <!-- Printing and PDF exports -->
   <script>
   if( window.location.search.match( /print-pdf/gi ) ) {
     var link = document.createElement( 'link' );
     link.rel = 'stylesheet';
     link.type = 'text/css';
-    link.href = 'css/print/pdf.css';
+    link.href = 'reveal.js/css/print/pdf.css';
     document.getElementsByTagName( 'head' )[0].appendChild( link );
   }
   </script>
 </head>
+<!-- CONTENT -->
 <body>
   <div class="reveal">
     <div class="slides">
@@ -34,17 +35,14 @@
         <div id="left70">
           <h2 style="font-size: 1.1em;">¿Por qué <strike style="text-decoration-thickness: 6px;"><i class="ep-red">Python</i></strike> <i class="yellow">tu código</i> es lento?</h2>
           <h4 style="font-size: 80%;"><i class="blue">recomendaciones para mejorar el rendimiento</i></h4>
-        <p style="font-size: 70%;margin-top: 10%;">
-          Dr. <i class="yellow">Cristián</i> Maureira-Fredes
-        </p>
-        <p style="font-size: 50%">
-          Senior R&amp;D Manager en  <img class="plain" src="img/qt.png" style="height: 50px; vertical-align: middle; background: rgba(0, 0, 0, 0);">
-          <br/>
+        <p class="x80">
+        <i class="python-yellow" style="font-size: 3rem;">Cristián</i><br>
+        maureira.dev<br/><br/>
           @cmaureir<br/>
-          <img class="plain" src="img/mastodon.png" style="background: rgba(0,0,0,0);height: 40px;">
-          <img class="plain" src="img/github_white.png"  style="background: rgba(0,0,0,0);height: 40px;">
-          <img class="plain" src="img/linkedin.png"  style="background: rgba(0,0,0,0);height: 40px;">
-          <img class="plain" src="img/twitter.png" style="background: rgba(0,0,0,0);height: 40px;"><br/>
+          <img class="clean-img" src="img/bluesky.png">
+          <img class="clean-img" src="img/mastodon.png">
+          <img class="clean-img" src="img/github_white.png">
+          <img class="clean-img" src="img/linkedin.png">
         </p>
         </div>
         <div id="right30">
@@ -52,10 +50,55 @@
       </section>
       <!--***************************************************************************-->
 
+<section data-transition="fade-in fade-out" data-background-image="img/background_eggs.svg">
+</section>
+
+<section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
+    <h2 class="r-fit-text">
+    $ easy_install NumArray
+    </h2>
+</section>
+
+<section data-transition="fade-in fade-out">
+    <div id="left">
+        <img src="img/migration_1.svg" />
+    </div>
+    <div id="right" class="fragment">
+        <img src="img/migration_2.svg" />
+    </div>
+</section>
+
+<section data-transition="fade-in fade-out" data-auto-animate>
+  <div class="r-hstack justify-center">
+      <div><img style="width: 500px;" src="img/career_1.png"/></div>
+      <div><img class="fragment" style="width: 500px;" src="img/career_2.png"/></div>
+      <div><img class="fragment" style="width: 500px;" src="img/career_3.png"/></div>
+  </div>
+</section>
+
+<section data-auto-animate data-auto-animate="cubic-bezier(0.77, 0, 0.175, 1.0)">
+  <img data-id="logo1"  data-auto-animate-delay="0.0" style="margin: 10px; width: 200px;"  src="img/psf.png" />
+  <img data-id="logo2"  data-auto-animate-delay="0.3" style="margin: 10px; width: 200px;"  src="img/eps.png" />
+  <img data-id="logo3"  data-auto-animate-delay="0.6" style="margin: 10px; width: 200px;" src="img/pyladiescon.png" />
+  <img data-id="logo4"  data-auto-animate-delay="0.9" style="margin: 10px; width: 200px;"  src="img/pycon_charlas.png" />
+  <img data-id="logo5"  data-auto-animate-delay="1.2" style="margin: 10px; width: 200px;"  src="img/hablemos_python.png" />
+  <img data-id="logo6"  data-auto-animate-delay="1.5" style="margin: 10px; width: 200px;"  src="img/pypi.png" />
+  <img data-id="logo7"  data-auto-animate-delay="1.8" style="margin: 10px; width: 200px;"  src="img/python_docs_es.png" />
+  <img data-id="logo8"  data-auto-animate-delay="2.1" style="margin: 10px; width: 200px;" src="img/pyladies_berlin.png" />
+  <img data-id="logo9"  data-auto-animate-delay="2.4" style="margin: 10px; width: 200px;"  src="img/python_pizza.png" />
+  <img data-id="logo10" data-auto-animate-delay="2.7" style="margin: 10px; width: 220px;"  src="img/python_chile.png" />
+  <img data-id="logo11" data-auto-animate-delay="3.0" style="margin: 10px; width: 220px;"  src="img/python_spain.png" />
+</section>
+
       <section data-transition="slide-in fade-out">
-        <h3><i class="red">¡Python es lento!</i></h3>
-        <h2 class="fragment">¿Qué Python? 👀</h2>
-        <h1 class="fragment">😨</h1>
+        <h3 class="r-fit-text">¿Tienes interés en <i class="qt-lemon">ayudar</i>?</h3>
+        <h3><i class="qt-neon">¡Hablemos!</i></h3>
+        <p>maureira.dev</p>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3 class="r-fit-text"><i class="red">¡Python es lento!</i></h3>
+        <h2 class="fragment">pero...¿Qué Python? 👀</h2>
       </section>
 
       <section data-transition="slide-in fade-out">
@@ -78,27 +121,27 @@
         <h3><i class="yellow">...por otro lado</i></h3>
 
         <h4 class="fragment">
-          Python ha demostrado ser un lenguaje que permite <i class="green">escalar</i> sistemas
+        Python ha demostrado ser un lenguaje que permite <i class="green">escalar</i> sistemas
         muy complejos, por ejemplo:
         </h4>
 
-        <p style="font-size: 80%;" class="fragment">
-          <i class="orange">YouTube, Dropbox, Disqus, Eventbrite, Reddit, Twilio, Instagram, Yelp, PayPal, etc...</i>
+        <p style="font-size: 60%;" class="fragment">
+          <i class="orange">Instagram, YouTube, Dropbox, Disqus, Eventbrite, Reddit, Twilio, Instagram, Yelp, PayPal, etc...</i>
         </p>
       </section>
 
       <section data-transition="slide-in fade-out">
         <blockquote>
-        ...bueno pero igual me dicen que es más lento
-        que <i class="ep-red">Lenguaje X</i>
+        "...bueno pero igual me dicen que es más lento
+        que <i class="ep-red">Lenguaje X</i>"
         </blockquote>
         <h3>😑</h3>
       </section>
 
       <section data-transition="slide-in fade-out">
         <ul>
-          <li class="fragment">el desempeño depende de <i class="yellow">tu aplicación</i></li>
-          <li class="fragment">es posible que <i class="yellow">tú código</i> tenga <i class="red">la culpa</i></li>
+          <li class="fragment">El desempeño depende de <i class="yellow">tu aplicación</i></li>
+          <li class="fragment">Es posible que <i class="yellow">tú código</i> tenga <i class="red">la culpa</i></li>
         </ul>
         <img class="fragment" src="img/pikachu.png" style="width: 40%;"/>
       </section>
@@ -111,8 +154,7 @@
 
       <section data-transition="slide-in fade-out">
         <i class="yellow">...entonces</i>
-        <h3>¿cómo puedo mejorar el rendimiento?</h3>
-        <h2>🤔</h2>
+        <h3 class="r-fit-text">¿cómo puedes mejorar el rendimiento?🤔</h3>
       </section>
 
       <section data-transition="slide-in fade-out" data-background-video="img/matrix.mp4" data-background-video-loop>
@@ -309,7 +351,7 @@
             return t
 
         N = 5_000
-        l =  [[random.random() for i in range(N) for _ in range(N)]]
+        l =  [[random.random() for i in range(N)] for _ in range(N)]
         print(f(l))
         print(g(l))
         </code></pre>
@@ -477,7 +519,7 @@
         </div>
         <div id="right">
           <ul>
-            <li>Python 3.7+</li>
+            <li>Python 3.8+</li>
             <li>sampling / functions</li>
             <li>Compatible con Jupyter, Django, Flask, FastAPI, Pytest</li>
           </ul>
@@ -503,7 +545,7 @@
         </div>
         <div id="right">
           <ul>
-            <li>Python 2.3, 2.7, 3.3+</li>
+            <li>Python 2.7, 3.3+</li>
             <li>sampling / lines</li>
             <li>permite visualización</li>
           </ul>
@@ -530,27 +572,8 @@
         </div>
         <div id="right">
           <ul>
-            <li>Python 2.3, 2.7, 3.3+</li>
+            <li>Python 3.6+</li>
             <li>tracing / functions</li>
-          </ul>
-        </div>
-      </section>
-
-      <section data-transition="slide-in fade-out">
-        <h3><code>austin</code></h3>
-        <div id="left">
-        <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
-        austin python main.py
-        </code></pre>
-        <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
-        austin -p 123
-        </code></pre>
-        </div>
-        <div id="right">
-          <ul>
-            <li>CPython</li>
-            <li>sampler / lines</li>
-            <li>Visualización</li>
           </ul>
         </div>
       </section>
@@ -567,7 +590,7 @@
         </div>
         <div id="right">
           <ul>
-            <li>Python 3.6+</li>
+            <li>Python 3.8+</li>
             <li>tracing / lines</li>
             <li>Motivación con extensiones</li>
           </ul>
@@ -575,7 +598,7 @@
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3><code>pip install scalene</code> (1/4)</h3>
+        <h3><code>pip install scalene</code> (1/2)</h3>
         <ul>
           <li>CPU + GPU</li>
           <li>Sugerencias IA</li>
@@ -585,33 +608,112 @@
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3><code>pip install scalene</code> (2/4)</h3>
+        <h3><code>pip install scalene</code> (2/2)</h3>
         <img src="img/sample-profile-pystone.png"/>
         <p style="font-size: 60%;">(de <a href="https://github.com/plasma-umass/scalene">github.com/plasma-umass/scalene</a>)
       </section>
 
+
       <section data-transition="slide-in fade-out">
-        <h3><code>pip install scalene</code> (3/4)</h3>
-        <img src="img/profiler-comparison.png"/>
-        <p style="font-size: 60%;">(de <a href="https://github.com/plasma-umass/scalene">github.com/plasma-umass/scalene</a>)
+        <h3><code>pip install memray</code> (1/2)</h3>
+        <div id="left">
+        <ul style="font-size: 80%">
+          <li>Perfilador de memoria</li>
+          <li>Para código Python y de extensiones</li>
+          <li>Python 3.8+</li>
+          <li>Soporta hilos nativos y de Python</li>
+        </ul>
+        </div>
+        <div id="left">
+          <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
+          memray run example.py
+          </code></pre>
+          <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
+          memray flamegraph memray-example.4131.bin
+          </code></pre>
+        </div>
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3><code>pip install scalene</code> (4/4)</h3>
-        <img src="img/cpu-accuracy-comparison.png"/>
-        <p style="font-size: 60%;">(de <a href="https://github.com/plasma-umass/scalene">github.com/plasma-umass/scalene</a>)
+        <h3><code>pip install memray</code> (2/2)</h3>
+        <img style="width: 80%;" src="img/memray_live_animated.webp"/>
+      </section>
+
+
+      <section data-transition="slide-in fade-out">
+        <h3>The Linux Perf profiler (1/2)</h3>
+        <ul style="font-size: 80%">
+          <li>Disponible desde 3.12</li>
+          <li class="fragment">No requiere modificación de código</li>
+          <li class="fragment"><i class="qt-neon">Muy avanzado y poderoso</i></li>
+          <li class="fragment">Overhead muy pequeño</li>
+          <li class="fragment"><i class="qt-lemon">Stack, eventos del hardware, llamadas de sistema, código de bibliotecas,...</i></li>
+          <li class="fragment">Only for Linux 🐧</li>
+        </ul>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3>The Linux Perf profiler (1/2)</h3>
+        <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
+        $ sudo perf record -g -F 999 \
+                   "$HOME/python-custom-build/bin/python3" -X perf \
+                   profile_perf.py
+        </code></pre>
+        <pre style="font-size: 40%; width: 100%;"><code class="python" data-trim data-noescape>
+$ sudo perf report
+Samples: 14K of event 'cycles', Event count (approx.): 34033217919
+  Children      Self  Command  Shared Object       Symbol
++   99.49%    39.26%  python3  python3.12          [.] _PyEval_EvalFrameDefault
++   99.47%     0.00%  python3  python3.12          [.] PyObject_Vectorcall
++   99.46%     0.00%  python3  python3.12          [.] PyObject_Call
++   99.27%     0.00%  python3  python3.12          [.] method_vectorcall
++   99.23%     0.00%  python3  libpthread-2.31.so  [.] start_thread
++   99.23%     0.00%  python3  python3.12          [.] pythread_wrapper
++   99.23%     0.00%  python3  python3.12          [.] thread_run
++   99.23%     0.00%  python3  [JIT] tid 6847      [.] py::Thread._bootstrap:/home/realpython/python-custom-build/lib/python3.12/threading.py
++   99.23%     0.00%  python3  [JIT] tid 6847      [.] py::Thread._bootstrap_inner:/home/realpython/python-custom-build/lib/python3.12/threading.py
++   99.23%     0.00%  python3  [JIT] tid 6847      [.] py::Thread.run:/home/realpython/python-custom-build/lib/python3.12/threading.py
++   99.23%     0.00%  python3  [JIT] tid 6847      [.] py::_worker:/home/realpython/python-custom-build/lib/python3.12/concurrent/futures/thread.py
++   99.23%     0.00%  python3  [JIT] tid 6847      [.] py::_WorkItem.run:/home/realpython/python-custom-build/lib/python3.12/concurrent/futures/thread
++   99.23%     0.00%  python3  [JIT] tid 6847      [.] py::find_divisors:/home/realpython/profile_perf.py
++   65.93%     0.00%  python3  [JIT] tid 6847      [.] py::slow_function:/home/realpython/profile_perf.py
++   33.30%     0.00%  python3  [JIT] tid 6847      [.] py::fast_function:/home/realpython/profile_perf.py
+(...)
+        </code></pre>
       </section>
 
       <section data-transition="slide-in fade-out" data-background-color="rgb(52,103,146)">
+        <p><i class="qt-lemon">¿Qué viene luego?</i></p>
         <h1>Detalles de implementación</i></h1>
       </section>
 
       <section data-transition="slide-in fade-out">
-        <img src="img/mariposa.png"/>
+        <img style="width: 50%;"src="img/mariposa.png"/>
       </section>
 
       <section data-transition="slide-in fade-out">
         <h3>Reducir el número de variables</h3>
+        <div id="left70">
+        <ul style="font-size: 70%;">
+          <li>¿Es necesario tener tantas copias de <...>?</li>
+          <li>¿Se puede utilizar un contenedor en vez de dos?</li>
+          <li>¿Se debe pasar tanta información a una función?
+        </ul>
+        </div>
+        <div id="right30">
+        <pre style="font-size: 38%; width: 100%;"><code class="python" data-trim data-noescape>
+        STORAGE = ...
+        def funcion(df):
+          c = 0
+          for pais in df["pais"]:
+            if pais in STORAGE:
+              c += 1
+          return c
+
+        df = pd.read_csv(...)
+        contador = funcion(df)
+        </code></pre>
+        </div>
       </section>
 
       <section data-transition="slide-in fade-out">
@@ -622,8 +724,10 @@
           # Llamemos todo esto "test_code"
           import random
           import string
-          t = random.choices(string.ascii_letters,
-                             k=1_000)
+          t = "".join(random.choices(
+            string.ascii_letters,
+            k=1_000)
+          )
           </code></pre>
           <pre style="font-size: 40%; width: 90%;"><code class="python fragment" data-trim data-noescape>
           s = t[:]    # ?
@@ -633,18 +737,20 @@
         </div>
         <div id="right">
         <pre style="font-size: 35%; width: 90%;"><code class="python fragment" data-trim data-noescape>
-        >>> timeit.timeit("s = t[:]", setup=test_code)
-        0.9558109600038733
-        >>> timeit.timeit("s = t", setup=test_code)
-        0.010780797019833699
-        >>> timeit.timeit("s = str(t)", setup=test_code)
-        23.832692831987515
+        >>> timeit.timeit("s = t[:]", setup="<test_code>")
+        0.026016438961960375
+
+        >>> timeit.timeit("s = t", setup="<test_code>")
+        0.015006409958004951
+
+        >>> timeit.timeit("s = str(t)", setup="<test_code>")
+        0.019700067932717502
         </code></pre>
         </div>
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3>¿Búcles o <i>Comprehensions</i>? (1/2)</h3>
+        <h3>¿Búcles o <i>Comprensiones</i>? (1/2)</h3>
         <div id="left">
         <pre style="font-size: 40%; width: 90%;"><code class="python" data-trim data-noescape>
         def f(years):
@@ -910,8 +1016,8 @@
         <p style="font-size: 80%;"><a href="https://pypy.org">pypy.org</a></p>
         <div id="left">
           <ul>
-            <li class="fragment">Reemplazo de CPython</li>
-            <li class="fragment">No siempre las últimas versiones (3.9.15)</li>
+            <li class="fragment">Reemplazo de CPython (3x CPython 3.11)</li>
+            <li class="fragment">No siempre las últimas versiones (3.11)</li>
             <li class="fragment"><i class="yellow">Escrito en Python</i> 🤯</li>
           </ul>
         </div>
@@ -964,13 +1070,6 @@
 
   <section data-transition="slide-in fade-out">
         <h3>Crea una extensión (2/3) - <i class="yellow">en C</i></h3>
-    <h3><i class="yellow">setup.py</i></h3>
-    <pre class="fragment fade-in" data-fragment-index="1"style="font-size: 50%;width: 100%;"><code class="python fragment" data-trim data-noescape>
-    from setuptools import setup, Extension
-
-    setup(name='simple', version='1.0',
-          ext_modules=[Extension('simple', ['simple.c'])])
-    </code></pre>
     <h3><i class="yellow">pyproject.toml</i></h3>
     <pre class="fragment fade-in" data-fragment-index="1"style="font-size: 50%;width: 100%;"><code class="python fragment" data-trim data-noescape>
     [build-system]
@@ -1050,8 +1149,16 @@
       </section>
 
       <section data-transition="slide-in fade-out">
-        <h3>3.11 -  <i class="green">10-60% más rápido</i> que 3.10</h3>
-        <h2>3.12 - 📈</h2>
+        <h3>Python se hace más rápido</h3>
+        <ul>
+        <li class="fragment">3.11 -  <i class="green">10-60% más rápido</i> que 3.10</li>
+        <li class="fragment">3.12 - 📈 tokenize, asyncio, etc</li>
+        <li class="fragment">3.13 - Free threaded, experimental JIT</li>
+        <li class="fragment">3.14 - New interpreter (3-5%), JIT (10% lower to 20% faster)</li>
+        </ul>
+        <p style="font-size: 50%">
+          <i class="qt-lemon">Más información:</i> https://github.com/faster-cpython/benchmarking-public
+        </p>
       </section>
 
 
@@ -1073,13 +1180,13 @@
           Dr. <i class="yellow">Cristián</i> Maureira-Fredes
         </p>
         <p style="font-size: 50%">
-          Senior R&amp;D Manager en  <img class="plain" src="img/qt.png" style="height: 50px; vertical-align: middle; background: rgba(0, 0, 0, 0);">
           <br/>
+          maureira.dev<br/>
           @cmaureir<br/>
-          <img class="plain" src="img/mastodon.png" style="background: rgba(0,0,0,0);height: 40px;">
-          <img class="plain" src="img/github_white.png"  style="background: rgba(0,0,0,0);height: 40px;">
-          <img class="plain" src="img/linkedin.png"  style="background: rgba(0,0,0,0);height: 40px;">
-          <img class="plain" src="img/twitter.png" style="background: rgba(0,0,0,0);height: 40px;"><br/>
+          <img class="clean-img" src="img/bluesky.png">
+          <img class="clean-img" src="img/mastodon.png">
+          <img class="clean-img" src="img/github_white.png">
+          <img class="clean-img" src="img/linkedin.png">
         </p>
         </div>
         <div id="right30">
@@ -1092,17 +1199,16 @@
     </div>
   </div>
 
-  <script src="dist/reveal.js"></script>
-  <script src="plugin/notes/notes.js"></script>
-  <script src="plugin/markdown/markdown.js"></script>
-  <script src="plugin/highlight/highlight.js"></script>
+  <script src="reveal.js/dist/reveal.js"></script>
+  <script src="reveal.js/plugin/notes/notes.js"></script>
+  <script src="reveal.js/plugin/markdown/markdown.js"></script>
+  <script src="reveal.js/plugin/highlight/highlight.js"></script>
   <script>
     // More info about initialization & config:
     // - https://revealjs.com/initialization/
     // - https://revealjs.com/config/
     Reveal.initialize({
       hash: true,
-      transitionSpeed: 'fast',
 
       // Learn about plugins: https://revealjs.com/plugins/
       plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
@@ -1114,10 +1220,16 @@
   <!-- 2. Create hidden header/footer <div> -->
   <div id="hidden" style="display:none;">
     <div id="header">
-      <div id="header-left"></div>
-      <div id="header-right"><img src="img/pythonchile_logo.png" style="width: 150px; margin-right: 20px;" /></div>
-      <div id="footer-left"><p style="font-size: 18pt;margin-left: 20px;"><i class="yellow">Python Chile</i> | @cmaureir - https://maureira.xyz
-    </div>
+      <div id="header-left" style="margin-top: 20px; margin-left: 20px; font-size: 12pt;">
+        <img style="width: 30%;" src="img/pycon_panama.png"/>
+      </div>
+      <div id="header-right"></div>
+      <div id="footer-left">
+        <p style="font-size: 16pt;margin-left: 20px;">
+          <!--<img class="clean-img" src="img/qt_white.png" />-->
+          <i class="python-yellow">PyCon Panamá 2025 | </i>
+          <b>@cmaureir</b>
+      </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
